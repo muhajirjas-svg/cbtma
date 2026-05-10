@@ -1,0 +1,2302 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal Ujian - MAS PP Darus Sa'adah As'adiyah Lancirang</title>
+<link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hijau: #1a5c3a;
+    --hijau-muda: #2e8b57;
+    --hijau-terang: #4caf84;
+    --hijau-pale: #e8f5ee;
+    --emas: #c8a951;
+    --emas-muda: #e8c96a;
+    --emas-pale: #fdf6e3;
+    --coklat: #5c3a1e;
+    --coklat-muda: #8b5e3c;
+    --putih: #ffffff;
+    --abu: #f4f4f0;
+    --teks: #1a1a1a;
+    --teks-muda: #555;
+    --sidebar-w: 260px;
+    --shadow: 0 2px 12px rgba(26,92,58,0.10);
+    --radius: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: #f0f4f1;
+    color: var(--teks);
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ===== SIDEBAR ===== */
+  #sidebar {
+    width: var(--sidebar-w);
+    background: linear-gradient(175deg, #0e3d26 0%, #1a5c3a 50%, #1e6b44 100%);
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    border-right: 3px solid var(--emas);
+  }
+
+  .sidebar-logo {
+    padding: 20px 16px 16px;
+    text-align: center;
+    border-bottom: 1px solid rgba(200,169,81,0.3);
+  }
+
+  .logo-emblem {
+    width: 72px; height: 72px;
+    margin: 0 auto 10px;
+    background: radial-gradient(circle, #fffbe6 0%, #e8c96a 50%, #c8a951 100%);
+    border-radius: 50%;
+    border: 3px solid var(--emas);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 0 18px rgba(200,169,81,0.4);
+  }
+
+  .logo-text {
+    font-family: 'Cinzel', serif;
+    color: var(--emas-muda);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .logo-sub {
+    color: rgba(255,255,255,0.6);
+    font-size: 9.5px;
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .arabic-banner {
+    font-family: 'Scheherazade New', serif;
+    color: var(--emas-muda);
+    font-size: 18px;
+    text-align: center;
+    padding: 10px 16px 8px;
+    border-bottom: 1px solid rgba(200,169,81,0.2);
+    direction: rtl;
+    opacity: 0.85;
+  }
+
+  .nav-section-label {
+    color: rgba(200,169,81,0.6);
+    font-size: 9.5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 16px 18px 6px;
+    font-weight: 700;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    color: rgba(255,255,255,0.75);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+    font-size: 13.5px;
+    font-weight: 400;
+    text-decoration: none;
+  }
+
+  .nav-item:hover {
+    background: rgba(200,169,81,0.12);
+    color: var(--emas-muda);
+    border-left-color: rgba(200,169,81,0.5);
+  }
+
+  .nav-item.active {
+    background: rgba(200,169,81,0.18);
+    color: var(--emas-muda);
+    border-left-color: var(--emas);
+    font-weight: 700;
+  }
+
+  .nav-item .nav-icon {
+    font-size: 17px;
+    width: 22px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 14px 16px;
+    border-top: 1px solid rgba(200,169,81,0.2);
+  }
+
+  .user-badge {
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .user-avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--emas), #a07830);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .user-info { flex: 1; overflow: hidden; }
+  .user-name { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.9); }
+  .user-role { font-size: 10px; color: rgba(200,169,81,0.7); }
+
+  .logout-btn {
+    background: none; border: none;
+    color: rgba(255,100,100,0.6);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px;
+    transition: color 0.2s;
+  }
+  .logout-btn:hover { color: #ff6b6b; }
+
+  /* ===== MAIN AREA ===== */
+  #main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* ===== TOPBAR ===== */
+  #topbar {
+    background: white;
+    border-bottom: 2px solid var(--hijau-pale);
+    padding: 0 28px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky; top: 0;
+    z-index: 50;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  .topbar-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--hijau);
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.5px;
+  }
+
+  .topbar-right {
+    display: flex; align-items: center; gap: 16px;
+  }
+
+  .topbar-badge {
+    background: var(--hijau-pale);
+    color: var(--hijau);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    border: 1px solid rgba(46,139,87,0.2);
+  }
+
+  .topbar-date {
+    font-size: 12px;
+    color: var(--teks-muda);
+  }
+
+  /* ===== CONTENT ===== */
+  #content {
+    flex: 1;
+    padding: 28px;
+    overflow-y: auto;
+  }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ===== SECTION HEADER ===== */
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--hijau);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title::before {
+    content: '';
+    display: block;
+    width: 4px; height: 28px;
+    background: linear-gradient(to bottom, var(--emas), var(--hijau));
+    border-radius: 2px;
+  }
+
+  /* ===== STAT CARDS ===== */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .stat-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 20px;
+    border: 1px solid rgba(26,92,58,0.08);
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26,92,58,0.15);
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .stat-card.green::before { background: linear-gradient(to right, var(--hijau), var(--hijau-terang)); }
+  .stat-card.gold::before { background: linear-gradient(to right, var(--emas), var(--emas-muda)); }
+  .stat-card.blue::before { background: linear-gradient(to right, #2980b9, #5dade2); }
+  .stat-card.red::before { background: linear-gradient(to right, #c0392b, #e74c3c); }
+
+  .stat-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .stat-number {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--hijau);
+    font-family: 'Cinzel', serif;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--teks-muda);
+    margin-top: 5px;
+    font-weight: 400;
+  }
+
+  /* ===== CARDS ===== */
+  .card {
+    background: white;
+    border-radius: var(--radius);
+    border: 1px solid rgba(26,92,58,0.1);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .card-header {
+    padding: 16px 20px;
+    background: linear-gradient(to right, var(--hijau-pale), rgba(200,169,81,0.06));
+    border-bottom: 1px solid rgba(26,92,58,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--hijau);
+    letter-spacing: 0.3px;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  /* ===== TABLES ===== */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .data-table th {
+    background: linear-gradient(to right, var(--hijau), var(--hijau-muda));
+    color: white;
+    padding: 11px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: left;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .data-table th:first-child { border-radius: 6px 0 0 6px; }
+  .data-table th:last-child { border-radius: 0 6px 6px 0; }
+
+  .data-table td {
+    padding: 11px 14px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--abu);
+    color: var(--teks);
+    vertical-align: middle;
+  }
+
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: var(--hijau-pale); }
+
+  /* ===== BADGES ===== */
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .badge-green { background: #e8f5ee; color: #1a5c3a; }
+  .badge-gold { background: #fdf6e3; color: #7a5f00; }
+  .badge-blue { background: #e8f0fa; color: #1a3a6b; }
+  .badge-red { background: #fdecea; color: #8b1a1a; }
+  .badge-gray { background: #f0f0f0; color: #555; }
+
+  /* ===== BUTTONS ===== */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'Lato', sans-serif;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--hijau), var(--hijau-muda));
+    color: white;
+    box-shadow: 0 3px 10px rgba(26,92,58,0.25);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 5px 16px rgba(26,92,58,0.3); }
+
+  .btn-gold {
+    background: linear-gradient(135deg, var(--emas), var(--emas-muda));
+    color: white;
+    box-shadow: 0 3px 10px rgba(200,169,81,0.3);
+  }
+  .btn-gold:hover { transform: translateY(-1px); }
+
+  .btn-outline {
+    background: transparent;
+    border: 1.5px solid var(--hijau);
+    color: var(--hijau);
+  }
+  .btn-outline:hover { background: var(--hijau-pale); }
+
+  .btn-danger {
+    background: #c0392b;
+    color: white;
+  }
+  .btn-danger:hover { background: #a93226; }
+
+  .btn-sm { padding: 5px 12px; font-size: 12px; }
+
+  /* ===== FORMS ===== */
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--hijau);
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid rgba(26,92,58,0.2);
+    border-radius: 8px;
+    font-size: 13.5px;
+    font-family: 'Lato', sans-serif;
+    color: var(--teks);
+    background: white;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+
+  .form-control:focus {
+    border-color: var(--hijau-muda);
+    box-shadow: 0 0 0 3px rgba(46,139,87,0.12);
+  }
+
+  textarea.form-control { min-height: 100px; resize: vertical; }
+
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* ===== LOGIN PAGE ===== */
+  #login-page {
+    display: none;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0a2e1a 0%, #1a5c3a 50%, #0e3d26 100%);
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 9999;
+  }
+
+  #login-page.show { display: flex; }
+
+  .login-box {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    width: 380px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    border-top: 5px solid var(--emas);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .login-box::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 100px; height: 100px;
+    background: radial-gradient(circle at 80% 80%, rgba(26,92,58,0.06) 0%, transparent 70%);
+  }
+
+  .login-header { text-align: center; margin-bottom: 28px; }
+  .login-emblem {
+    width: 80px; height: 80px;
+    margin: 0 auto 14px;
+    background: radial-gradient(circle, #fffbe6 0%, #e8c96a 60%, #c8a951 100%);
+    border-radius: 50%;
+    border: 3px solid var(--emas);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 6px 20px rgba(200,169,81,0.35);
+  }
+
+  .login-title {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--hijau);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .login-subtitle {
+    font-size: 11px;
+    color: var(--teks-muda);
+    margin-top: 4px;
+  }
+
+  .login-arabic {
+    font-family: 'Scheherazade New', serif;
+    font-size: 22px;
+    color: var(--emas);
+    direction: rtl;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .role-tabs {
+    display: flex;
+    background: var(--abu);
+    border-radius: 8px;
+    padding: 4px;
+    margin-bottom: 20px;
+  }
+
+  .role-tab {
+    flex: 1;
+    padding: 8px;
+    text-align: center;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--teks-muda);
+    border: none;
+    background: transparent;
+    font-family: 'Lato', sans-serif;
+  }
+
+  .role-tab.active {
+    background: var(--hijau);
+    color: white;
+    box-shadow: 0 2px 8px rgba(26,92,58,0.25);
+  }
+
+  /* ===== UJIAN CARDS ===== */
+  .ujian-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+
+  .ujian-card {
+    background: white;
+    border-radius: var(--radius);
+    border: 1px solid rgba(26,92,58,0.1);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+
+  .ujian-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(26,92,58,0.15); }
+
+  .ujian-card-header {
+    padding: 16px 18px;
+    background: linear-gradient(135deg, var(--hijau), var(--hijau-muda));
+    color: white;
+  }
+
+  .ujian-card-mapel {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+
+  .ujian-card-meta { font-size: 11px; opacity: 0.8; }
+
+  .ujian-card-body { padding: 16px 18px; }
+
+  /* ===== PROGRESS BAR ===== */
+  .progress-bar {
+    background: var(--abu);
+    border-radius: 10px;
+    height: 8px;
+    overflow: hidden;
+    margin: 8px 0;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 10px;
+    background: linear-gradient(to right, var(--hijau), var(--hijau-terang));
+    transition: width 0.5s;
+  }
+
+  /* ===== SOAL UJIAN ===== */
+  #ujian-active { display: none; }
+
+  .soal-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .soal-header {
+    background: linear-gradient(135deg, var(--hijau), var(--hijau-muda));
+    color: white;
+    padding: 20px 28px;
+    border-radius: var(--radius) var(--radius) 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .timer-box {
+    background: rgba(200,169,81,0.25);
+    border: 2px solid var(--emas);
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 22px;
+    font-weight: 700;
+    font-family: 'Cinzel', serif;
+    color: var(--emas-muda);
+    letter-spacing: 2px;
+  }
+
+  .soal-nav {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    padding: 16px 28px;
+    background: var(--hijau-pale);
+    border-bottom: 1px solid rgba(26,92,58,0.1);
+  }
+
+  .soal-nav-btn {
+    width: 34px; height: 34px;
+    border-radius: 6px;
+    border: 1.5px solid rgba(26,92,58,0.25);
+    background: white;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--teks);
+    transition: all 0.15s;
+  }
+
+  .soal-nav-btn.answered { background: var(--hijau); color: white; border-color: var(--hijau); }
+  .soal-nav-btn.current { border-color: var(--emas); color: var(--emas); box-shadow: 0 0 0 2px rgba(200,169,81,0.2); }
+
+  .soal-body { padding: 28px; background: white; }
+
+  .soal-number {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--teks-muda);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .soal-text {
+    font-size: 15px;
+    color: var(--teks);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .opsi-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .opsi {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 13px 16px;
+    border: 1.5px solid rgba(26,92,58,0.15);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+  }
+
+  .opsi:hover { background: var(--hijau-pale); border-color: var(--hijau-muda); }
+  .opsi.selected { background: var(--hijau-pale); border-color: var(--hijau); }
+
+  .opsi-huruf {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--abu);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 12px;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+
+  .opsi.selected .opsi-huruf {
+    background: var(--hijau);
+    color: white;
+  }
+
+  .soal-footer {
+    padding: 18px 28px;
+    background: var(--abu);
+    border-radius: 0 0 var(--radius) var(--radius);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* ===== PROFIL PAGE ===== */
+  .profil-hero {
+    background: linear-gradient(135deg, var(--hijau) 0%, var(--hijau-muda) 60%, #1e8449 100%);
+    border-radius: var(--radius);
+    padding: 32px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .profil-hero::before {
+    content: 'بسم الله الرحمن الرحيم';
+    position: absolute;
+    right: 24px; top: 16px;
+    font-family: 'Scheherazade New', serif;
+    font-size: 28px;
+    color: rgba(200,169,81,0.35);
+    direction: rtl;
+    pointer-events: none;
+  }
+
+  .profil-avatar {
+    width: 90px; height: 90px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--emas-muda), var(--emas));
+    border: 4px solid rgba(255,255,255,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
+    flex-shrink: 0;
+  }
+
+  .profil-name { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .profil-role { font-size: 14px; opacity: 0.8; }
+  .profil-nsm { font-size: 12px; opacity: 0.65; margin-top: 6px; }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+  }
+
+  .modal-overlay.show { display: flex; }
+
+  .modal {
+    background: white;
+    border-radius: 16px;
+    padding: 0;
+    width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    border-top: 4px solid var(--emas);
+  }
+
+  .modal-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--abu);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky; top: 0;
+    background: white;
+    z-index: 10;
+  }
+
+  .modal-title {
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--hijau);
+  }
+
+  .modal-close {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: none;
+    background: var(--abu);
+    cursor: pointer;
+    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .modal-close:hover { background: #ddd; }
+
+  .modal-body { padding: 24px; }
+  .modal-footer { padding: 16px 24px; border-top: 1px solid var(--abu); display: flex; justify-content: flex-end; gap: 10px; }
+
+  /* ===== ALERT / TOAST ===== */
+  #toast-container {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    z-index: 9999;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+
+  .toast {
+    background: white;
+    border-left: 4px solid var(--hijau);
+    padding: 12px 18px;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--hijau);
+    animation: slideIn 0.3s ease;
+    min-width: 260px;
+  }
+
+  @keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  /* ===== SEARCH ===== */
+  .search-box {
+    position: relative;
+    margin-bottom: 16px;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 10px 14px 10px 38px;
+    border: 1.5px solid rgba(26,92,58,0.2);
+    border-radius: 8px;
+    font-size: 13.5px;
+    font-family: 'Lato', sans-serif;
+    outline: none;
+    background: white;
+    transition: border-color 0.2s;
+  }
+
+  .search-input:focus { border-color: var(--hijau-muda); }
+
+  .search-icon {
+    position: absolute;
+    left: 12px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  /* ===== CHART PLACEHOLDER ===== */
+  .chart-placeholder {
+    background: var(--abu);
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    color: var(--teks-muda);
+    font-size: 13px;
+  }
+
+  /* ===== BANTUAN ===== */
+  .faq-item {
+    border: 1px solid rgba(26,92,58,0.1);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+
+  .faq-q {
+    padding: 14px 18px;
+    font-weight: 700;
+    font-size: 13.5px;
+    cursor: pointer;
+    background: var(--hijau-pale);
+    color: var(--hijau);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+  }
+
+  .faq-q:hover { background: #d4eddf; }
+
+  .faq-a {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--teks-muda);
+    transition: max-height 0.3s, padding 0.3s;
+  }
+
+  .faq-item.open .faq-a { max-height: 300px; padding: 14px 18px; }
+  .faq-item.open .faq-arrow { transform: rotate(180deg); }
+
+  .faq-arrow { transition: transform 0.3s; }
+
+  /* ===== HASIL UJIAN ===== */
+  .nilai-circle {
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-family: 'Cinzel', serif;
+    border: 6px solid;
+    margin: 0 auto 16px;
+  }
+
+  .nilai-circle.lulus { border-color: var(--hijau); background: var(--hijau-pale); }
+  .nilai-circle.tidak-lulus { border-color: #c0392b; background: #fdecea; }
+
+  .nilai-angka { font-size: 32px; font-weight: 700; }
+  .nilai-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    :root { --sidebar-w: 0px; }
+    #sidebar { transform: translateX(-260px); width: 260px; transition: transform 0.3s; }
+    #sidebar.open { transform: translateX(0); }
+    #content { padding: 16px; }
+  }
+
+  .decorative-pattern {
+    position: fixed;
+    top: 0; left: var(--sidebar-w); right: 0; bottom: 0;
+    background-image: 
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(26,92,58,0.03) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(26,92,58,0.03) 40px);
+    pointer-events: none;
+    z-index: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- Login Page -->
+<div id="login-page" class="show">
+  <div class="login-box">
+    <div class="login-header">
+      <div class="login-emblem">🕌</div>
+      <div class="login-title">MAS PP Darus Sa'adah</div>
+      <div class="login-subtitle">As'adiyah Lancirang &bull; Portal Ujian Madrasah</div>
+    </div>
+    <div class="login-arabic">بسم الله الرحمن الرحيم</div>
+    <div class="role-tabs">
+      <button class="role-tab active" onclick="setRole('admin', this)">👨‍💼 Admin</button>
+      <button class="role-tab" onclick="setRole('guru', this)">👨‍🏫 Guru</button>
+      <button class="role-tab" onclick="setRole('murid', this)">🎓 Murid</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Username / NIS / NUPTK</label>
+      <input class="form-control" id="login-user" type="text" placeholder="Masukkan username..." value="admin">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input class="form-control" id="login-pass" type="password" placeholder="Masukkan password..." value="admin123">
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;font-size:14px;margin-top:4px;" onclick="doLogin()">
+      🔓 Masuk Portal
+    </button>
+    <p style="text-align:center;margin-top:14px;font-size:11px;color:#999;">
+      Demo: user = admin, pass = admin123
+    </p>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-emblem">🕌</div>
+    <div class="logo-text">MAS PP Darus Sa'adah<br>As'adiyah Lancirang</div>
+    <div class="logo-sub">NSM: 131273060001 &bull; Pinrang, Sul-Sel</div>
+  </div>
+  <div class="arabic-banner">بسم الله الرحمن الرحيم</div>
+
+  <div class="nav-section-label">Menu Utama</div>
+  <a class="nav-item active" onclick="showPage('dasbor')" href="#">
+    <span class="nav-icon">📊</span> Dasbor
+  </a>
+  <a class="nav-item" onclick="showPage('profil')" href="#">
+    <span class="nav-icon">🏫</span> Profil Madrasah
+  </a>
+
+  <div class="nav-section-label">Data Akademik</div>
+  <a class="nav-item" onclick="showPage('data-murid')" href="#">
+    <span class="nav-icon">👨‍🎓</span> Data Murid
+  </a>
+  <a class="nav-item" onclick="showPage('data-guru')" href="#">
+    <span class="nav-icon">👨‍🏫</span> Data Guru
+  </a>
+
+  <div class="nav-section-label">Ujian</div>
+  <a class="nav-item" onclick="showPage('soal-ujian')" href="#">
+    <span class="nav-icon">📝</span> Soal Ujian
+  </a>
+  <a class="nav-item" onclick="showPage('hasil-ujian')" href="#">
+    <span class="nav-icon">📋</span> Hasil Ujian
+  </a>
+  <a class="nav-item" onclick="showPage('jadwal')" href="#">
+    <span class="nav-icon">📅</span> Jadwal Ujian
+  </a>
+
+  <div class="nav-section-label">Lainnya</div>
+  <a class="nav-item" onclick="showPage('bantuan')" href="#">
+    <span class="nav-icon">❓</span> Bantuan
+  </a>
+
+  <div class="sidebar-footer">
+    <div class="user-badge">
+      <div class="user-avatar" id="sb-avatar">AD</div>
+      <div class="user-info">
+        <div class="user-name" id="sb-name">Administrator</div>
+        <div class="user-role" id="sb-role">Admin Portal</div>
+      </div>
+      <button class="logout-btn" onclick="doLogout()" title="Keluar">⏻</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Main -->
+<div id="main">
+  <!-- Topbar -->
+  <header id="topbar">
+    <div class="topbar-title">Portal Ujian Madrasah</div>
+    <div class="topbar-right">
+      <span class="topbar-badge" id="tb-role-badge">👨‍💼 Admin</span>
+      <span class="topbar-date" id="tb-date"></span>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main id="content">
+
+    <!-- ===== DASBOR ===== -->
+    <div id="page-dasbor" class="page active">
+      <div class="section-header">
+        <div class="section-title">Dasbor</div>
+        <span id="dash-greeting" style="font-size:13px;color:var(--teks-muda);"></span>
+      </div>
+
+      <!-- Welcome Banner -->
+      <div style="background:linear-gradient(135deg, #0e3d26, #1a5c3a, #1e8449);border-radius:14px;padding:24px 28px;color:white;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden;">
+        <div style="position:absolute;right:20px;top:10px;font-family:'Scheherazade New',serif;font-size:40px;color:rgba(200,169,81,0.2);direction:rtl;">وَمَن يَتَوَكَّلۡ عَلَى ٱللَّهِ</div>
+        <div>
+          <div style="font-family:'Cinzel',serif;font-size:20px;font-weight:700;margin-bottom:6px;">Selamat Datang di Portal Ujian</div>
+          <div style="font-size:13px;opacity:0.8;max-width:400px;">MAS PP Darus Sa'adah As'adiyah Lancirang — Sistem Ujian Digital Terintegrasi Tahun Pelajaran 2024/2025</div>
+        </div>
+        <div style="text-align:center;flex-shrink:0;">
+          <div style="font-family:'Scheherazade New',serif;font-size:38px;color:var(--emas-muda);direction:rtl;line-height:1;">🕌</div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card green">
+          <div class="stat-icon">👨‍🎓</div>
+          <div class="stat-number">342</div>
+          <div class="stat-label">Total Siswa Aktif</div>
+        </div>
+        <div class="stat-card gold">
+          <div class="stat-icon">👨‍🏫</div>
+          <div class="stat-number">28</div>
+          <div class="stat-label">Total Guru & Staf</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-icon">📝</div>
+          <div class="stat-number">156</div>
+          <div class="stat-label">Soal Tersedia</div>
+        </div>
+        <div class="stat-card red">
+          <div class="stat-icon">📅</div>
+          <div class="stat-number">8</div>
+          <div class="stat-label">Ujian Aktif Hari Ini</div>
+        </div>
+      </div>
+
+      <!-- Row: Aktivitas & Jadwal -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📋 Ujian Berlangsung</span>
+            <span class="badge badge-green">Hari Ini</span>
+          </div>
+          <div class="card-body" style="padding:0;">
+            <table class="data-table">
+              <thead><tr><th>Mapel</th><th>Kelas</th><th>Peserta</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>Al-Qur'an Hadits</td><td>X MA</td><td>38</td><td><span class="badge badge-green">Berlangsung</span></td></tr>
+                <tr><td>Fiqih</td><td>XI MA</td><td>36</td><td><span class="badge badge-green">Berlangsung</span></td></tr>
+                <tr><td>Bahasa Arab</td><td>XII MA</td><td>34</td><td><span class="badge badge-gold">Menunggu</span></td></tr>
+                <tr><td>Akidah Akhlak</td><td>X MA</td><td>38</td><td><span class="badge badge-gray">Selesai</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📊 Rekap Nilai Ujian</span>
+            <span class="badge badge-blue">Semester Ganjil</span>
+          </div>
+          <div class="card-body">
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>Al-Qur'an Hadits</span><span style="font-weight:700;color:var(--hijau);">82.4</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:82%;"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>Fiqih</span><span style="font-weight:700;color:var(--hijau);">78.9</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:79%;"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>Bahasa Arab</span><span style="font-weight:700;color:var(--hijau);">75.2</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:75%;"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>SKI</span><span style="font-weight:700;color:var(--hijau);">88.1</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:88%;"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notifikasi -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🔔 Pengumuman & Notifikasi</span>
+          <button class="btn btn-primary btn-sm" onclick="showToast('Pengumuman ditandai sudah dibaca')">Tandai Dibaca</button>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <div style="padding:14px 20px;border-bottom:1px solid var(--abu);display:flex;gap:14px;align-items:flex-start;">
+            <span style="font-size:20px;flex-shrink:0;">📢</span>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--hijau);margin-bottom:2px;">Ujian Akhir Semester Ganjil 2024/2025</div>
+              <div style="font-size:12px;color:var(--teks-muda);">Ujian Akhir Semester akan dilaksanakan tanggal 2-14 Desember 2024. Seluruh siswa harap mempersiapkan diri dengan baik.</div>
+            </div>
+            <span class="badge badge-red" style="flex-shrink:0;">Baru</span>
+          </div>
+          <div style="padding:14px 20px;border-bottom:1px solid var(--abu);display:flex;gap:14px;align-items:flex-start;">
+            <span style="font-size:20px;flex-shrink:0;">📋</span>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--hijau);margin-bottom:2px;">Update Kisi-Kisi Soal Bahasa Arab</div>
+              <div style="font-size:12px;color:var(--teks-muda);">Kisi-kisi soal Bahasa Arab untuk kelas XII telah diperbarui oleh Ustadz Ahmad Fauzi.</div>
+            </div>
+            <span class="badge badge-gold" style="flex-shrink:0;">Penting</span>
+          </div>
+          <div style="padding:14px 20px;display:flex;gap:14px;align-items:flex-start;">
+            <span style="font-size:20px;flex-shrink:0;">✅</span>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--hijau);margin-bottom:2px;">Input Nilai Tengah Semester Selesai</div>
+              <div style="font-size:12px;color:var(--teks-muda);">Seluruh nilai ujian tengah semester telah berhasil diinput. Laporan dapat diunduh.</div>
+            </div>
+            <span class="badge badge-gray" style="flex-shrink:0;">Selesai</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PROFIL ===== -->
+    <div id="page-profil" class="page">
+      <div class="section-header">
+        <div class="section-title">Profil Madrasah</div>
+      </div>
+
+      <div class="profil-hero">
+        <div class="profil-avatar">🕌</div>
+        <div>
+          <div class="profil-name">MAS PP Darus Sa'adah As'adiyah Lancirang</div>
+          <div class="profil-role">Madrasah Aliyah Swasta — Terakreditasi</div>
+          <div class="profil-nsm">NSM: 131273060001 &bull; NPSN: 40307219</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div class="card">
+          <div class="card-header"><span class="card-title">🏫 Informasi Umum</span></div>
+          <div class="card-body">
+            <table style="width:100%;font-size:13px;border-collapse:collapse;">
+              <tr><td style="padding:8px 0;color:var(--teks-muda);width:45%;">Nama Madrasah</td><td style="font-weight:700;">MAS PP Darus Sa'adah</td></tr>
+              <tr><td style="padding:8px 0;color:var(--teks-muda);">Jenis Madrasah</td><td>Madrasah Aliyah Swasta</td></tr>
+              <tr><td style="padding:8px 0;color:var(--teks-muda);">Pesantren</td><td>PP As'adiyah Lancirang</td></tr>
+              <tr><td style="padding:8px 0;color:var(--teks-muda);">Akreditasi</td><td><span class="badge badge-gold">B</span></td></tr>
+              <tr><td style="padding:8px 0;color:var(--teks-muda);">Status</td><td><span class="badge badge-green">Aktif</span></td></tr>
+              <tr><td style="padding:8px 0;color:var(--teks-muda);">Tahun Berdiri</td><td>1975</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-title">📍 Lokasi & Kontak</span></div>
+          <div class="card-body">
+            <table style="width:100%;font-size:13px;border-collapse:collapse;">
+              <tr><td style="padding:8px 0;color:var(--teks-muda);width:45%;">Alamat</td><td>Lancirang, Pitu Riawa</td></tr>
+              <tr><td style="padding:8px 0;color:var(--teks-muda);">Kabupaten</td><td>Sidrap</td></tr>
+              <tr><td style="padding:8px 0;color:var(--teks-muda);">Provinsi</td><td>Sulawesi Selatan</td></tr>
+              <tr><td style="padding:8px 0;color:var(--teks-muda);">Kode Pos</td><td>91651</td></tr>
+              <tr><td style="padding:8px 0;color:var(--teks-muda);">Telepon</td><td>—</td></tr>
+              <tr><td style="padding:8px 0;color:var(--teks-muda);">Email</td><td style="font-size:12px;">mas.darussaadah@gmail.com</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-title">👤 Pimpinan</span></div>
+          <div class="card-body">
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px;">
+              <div style="width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--emas),var(--coklat-muda));display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">👨‍💼</div>
+              <div>
+                <div style="font-weight:700;font-size:14px;">Drs. H. Muhammad Saleh</div>
+                <div style="font-size:12px;color:var(--teks-muda);">Kepala Madrasah</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px;">
+              <div style="width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--hijau),var(--hijau-terang));display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">👨‍🏫</div>
+              <div>
+                <div style="font-weight:700;font-size:14px;">H. Ahmad Fauzi, S.Ag</div>
+                <div style="font-size:12px;color:var(--teks-muda);">Wakil Kepala Bidang Kurikulum</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:16px;">
+              <div style="width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#2980b9,#5dade2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">👩‍💼</div>
+              <div>
+                <div style="font-weight:700;font-size:14px;">Hj. Nuraeni, S.Pd.I</div>
+                <div style="font-size:12px;color:var(--teks-muda);">Wakil Kepala Bidang Kesiswaan</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-title">📊 Statistik Madrasah</span></div>
+          <div class="card-body">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div style="background:var(--hijau-pale);border-radius:8px;padding:14px;text-align:center;">
+                <div style="font-size:24px;font-weight:700;color:var(--hijau);font-family:'Cinzel',serif;">6</div>
+                <div style="font-size:11px;color:var(--teks-muda);">Rombel Aktif</div>
+              </div>
+              <div style="background:var(--emas-pale);border-radius:8px;padding:14px;text-align:center;">
+                <div style="font-size:24px;font-weight:700;color:var(--coklat);font-family:'Cinzel',serif;">342</div>
+                <div style="font-size:11px;color:var(--teks-muda);">Siswa Aktif</div>
+              </div>
+              <div style="background:#e8f0fa;border-radius:8px;padding:14px;text-align:center;">
+                <div style="font-size:24px;font-weight:700;color:#1a3a6b;font-family:'Cinzel',serif;">28</div>
+                <div style="font-size:11px;color:var(--teks-muda);">Guru & Staf</div>
+              </div>
+              <div style="background:#fdecea;border-radius:8px;padding:14px;text-align:center;">
+                <div style="font-size:24px;font-weight:700;color:#8b1a1a;font-family:'Cinzel',serif;">18</div>
+                <div style="font-size:11px;color:var(--teks-muda);">Mata Pelajaran</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== DATA MURID ===== -->
+    <div id="page-data-murid" class="page">
+      <div class="section-header">
+        <div class="section-title">Data Murid</div>
+        <button class="btn btn-primary" onclick="openModal('modal-tambah-murid')">➕ Tambah Murid</button>
+      </div>
+
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-body" style="padding:16px 20px;">
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+            <div class="search-box" style="flex:1;min-width:200px;margin-bottom:0;">
+              <span class="search-icon">🔍</span>
+              <input class="search-input" id="cari-murid" placeholder="Cari nama, NIS, atau kelas..." oninput="filterMurid()">
+            </div>
+            <select class="form-control" id="filter-kelas-murid" onchange="filterMurid()" style="width:150px;">
+              <option value="">Semua Kelas</option>
+              <option value="X">Kelas X</option>
+              <option value="XI">Kelas XI</option>
+              <option value="XII">Kelas XII</option>
+            </select>
+            <select class="form-control" id="filter-status-murid" onchange="filterMurid()" style="width:150px;">
+              <option value="">Semua Status</option>
+              <option value="Aktif">Aktif</option>
+              <option value="Tidak Aktif">Tidak Aktif</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">👨‍🎓 Daftar Siswa</span>
+          <span class="badge badge-green" id="murid-count">9 Siswa</span>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="data-table" id="tabel-murid">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>NIS</th>
+                <th>Nama Lengkap</th>
+                <th>Kelas</th>
+                <th>Jenis Kelamin</th>
+                <th>Alamat</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-murid">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== DATA GURU ===== -->
+    <div id="page-data-guru" class="page">
+      <div class="section-header">
+        <div class="section-title">Data Guru</div>
+        <button class="btn btn-primary" onclick="openModal('modal-tambah-guru')">➕ Tambah Guru</button>
+      </div>
+
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-body" style="padding:16px 20px;">
+          <div style="display:flex;gap:12px;align-items:center;">
+            <div class="search-box" style="flex:1;margin-bottom:0;">
+              <span class="search-icon">🔍</span>
+              <input class="search-input" id="cari-guru" placeholder="Cari nama atau mata pelajaran..." oninput="filterGuru()">
+            </div>
+            <select class="form-control" id="filter-status-guru" onchange="filterGuru()" style="width:160px;">
+              <option value="">Semua Status</option>
+              <option value="PNS">PNS</option>
+              <option value="GTY">GTY</option>
+              <option value="GTT">GTT</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">👨‍🏫 Daftar Guru & Staf</span>
+          <span class="badge badge-gold" id="guru-count">8 Guru</span>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="data-table" id="tabel-guru">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>NUPTK</th>
+                <th>Nama Lengkap</th>
+                <th>Mata Pelajaran</th>
+                <th>Pendidikan</th>
+                <th>Status</th>
+                <th>No. HP</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-guru"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SOAL UJIAN ===== -->
+    <div id="page-soal-ujian" class="page">
+      <div id="daftar-soal">
+        <div class="section-header">
+          <div class="section-title">Soal Ujian</div>
+          <button class="btn btn-primary" onclick="openModal('modal-tambah-soal')">➕ Buat Paket Soal</button>
+        </div>
+
+        <div class="ujian-grid" id="paket-soal-grid"></div>
+      </div>
+
+      <div id="ujian-active">
+        <div class="soal-container">
+          <div class="soal-header">
+            <div>
+              <div style="font-family:'Cinzel',serif;font-size:16px;font-weight:700;" id="ujian-nama-aktif">Nama Ujian</div>
+              <div style="font-size:12px;opacity:0.8;margin-top:3px;" id="ujian-meta-aktif">Kelas — Mata Pelajaran</div>
+            </div>
+            <div class="timer-box" id="ujian-timer">90:00</div>
+          </div>
+
+          <div class="soal-nav" id="soal-nav-container"></div>
+
+          <div class="soal-body">
+            <div class="soal-number" id="soal-nomor">Soal 1 dari 20</div>
+            <div class="soal-text" id="soal-teks"></div>
+            <div class="opsi-list" id="soal-opsi"></div>
+          </div>
+
+          <div class="soal-footer">
+            <button class="btn btn-outline" id="btn-prev-soal" onclick="prevSoal()">← Sebelumnya</button>
+            <div style="display:flex;gap:10px;">
+              <button class="btn btn-outline" onclick="konfirmasiKumpul()">🚩 Kumpulkan</button>
+              <button class="btn btn-primary" id="btn-next-soal" onclick="nextSoal()">Selanjutnya →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HASIL UJIAN ===== -->
+    <div id="page-hasil-ujian" class="page">
+      <div class="section-header">
+        <div class="section-title">Hasil Ujian</div>
+        <button class="btn btn-gold" onclick="showToast('Laporan berhasil diunduh!')">📥 Unduh Laporan</button>
+      </div>
+
+      <div class="stats-grid" style="margin-bottom:20px;">
+        <div class="stat-card green"><div class="stat-icon">✅</div><div class="stat-number">89%</div><div class="stat-label">Tingkat Kelulusan</div></div>
+        <div class="stat-card gold"><div class="stat-icon">📈</div><div class="stat-number">81.4</div><div class="stat-label">Nilai Rata-rata</div></div>
+        <div class="stat-card blue"><div class="stat-icon">🏆</div><div class="stat-number">98</div><div class="stat-label">Nilai Tertinggi</div></div>
+        <div class="stat-card red"><div class="stat-icon">⚠️</div><div class="stat-number">12</div><div class="stat-label">Perlu Remedial</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">📋 Rekap Nilai Siswa</span>
+          <div style="display:flex;gap:8px;">
+            <select class="form-control" style="width:130px;padding:5px 10px;font-size:12px;">
+              <option>Semua Kelas</option>
+              <option>X MA</option>
+              <option>XI MA</option>
+              <option>XII MA</option>
+            </select>
+            <select class="form-control" style="width:160px;padding:5px 10px;font-size:12px;">
+              <option>Semua Mapel</option>
+              <option>Al-Qur'an Hadits</option>
+              <option>Fiqih</option>
+              <option>Bahasa Arab</option>
+            </select>
+          </div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead>
+              <tr><th>No</th><th>NIS</th><th>Nama Siswa</th><th>Kelas</th><th>Mata Pelajaran</th><th>Nilai</th><th>Status</th><th>Tanggal</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>2024001</td><td>Muhammad Rizqi Ramadhan</td><td>X MA</td><td>Al-Qur'an Hadits</td><td><strong>92</strong></td><td><span class="badge badge-green">Lulus</span></td><td>02/12/2024</td></tr>
+              <tr><td>2</td><td>2024002</td><td>Aisyah Nur Fadilah</td><td>X MA</td><td>Al-Qur'an Hadits</td><td><strong>88</strong></td><td><span class="badge badge-green">Lulus</span></td><td>02/12/2024</td></tr>
+              <tr><td>3</td><td>2024003</td><td>Ahmad Syahrul Ramli</td><td>X MA</td><td>Al-Qur'an Hadits</td><td><strong>56</strong></td><td><span class="badge badge-red">Remedial</span></td><td>02/12/2024</td></tr>
+              <tr><td>4</td><td>2023001</td><td>Fatimah Az-Zahrah</td><td>XI MA</td><td>Fiqih</td><td><strong>95</strong></td><td><span class="badge badge-green">Lulus</span></td><td>03/12/2024</td></tr>
+              <tr><td>5</td><td>2023002</td><td>Abdul Karim Saleh</td><td>XI MA</td><td>Fiqih</td><td><strong>79</strong></td><td><span class="badge badge-green">Lulus</span></td><td>03/12/2024</td></tr>
+              <tr><td>6</td><td>2022001</td><td>Siti Rahma Wati</td><td>XII MA</td><td>Bahasa Arab</td><td><strong>83</strong></td><td><span class="badge badge-green">Lulus</span></td><td>04/12/2024</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== JADWAL ===== -->
+    <div id="page-jadwal" class="page">
+      <div class="section-header">
+        <div class="section-title">Jadwal Ujian</div>
+        <button class="btn btn-primary" onclick="openModal('modal-tambah-jadwal')">➕ Tambah Jadwal</button>
+      </div>
+
+      <div class="card" style="margin-bottom:20px;">
+        <div class="card-header"><span class="card-title">📅 Jadwal Ujian Akhir Semester Ganjil 2024/2025</span></div>
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead>
+              <tr><th>Tanggal</th><th>Hari</th><th>Waktu</th><th>Mata Pelajaran</th><th>Kelas</th><th>Ruang</th><th>Pengawas</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>02 Des 2024</td><td>Senin</td><td>07.30 - 09.30</td><td>Al-Qur'an Hadits</td><td>X MA</td><td>R-01</td><td>Ust. Ahmad Fauzi</td><td><span class="badge badge-gray">Selesai</span></td></tr>
+              <tr><td>02 Des 2024</td><td>Senin</td><td>10.00 - 12.00</td><td>Akidah Akhlak</td><td>X MA</td><td>R-02</td><td>Ust. Muhammad Ali</td><td><span class="badge badge-gray">Selesai</span></td></tr>
+              <tr><td>03 Des 2024</td><td>Selasa</td><td>07.30 - 09.30</td><td>Fiqih</td><td>XI MA</td><td>R-01</td><td>Ustz. Siti Aminah</td><td><span class="badge badge-green">Berlangsung</span></td></tr>
+              <tr><td>04 Des 2024</td><td>Rabu</td><td>07.30 - 09.30</td><td>Bahasa Arab</td><td>XII MA</td><td>R-03</td><td>Ust. Kaharuddin</td><td><span class="badge badge-gold">Menunggu</span></td></tr>
+              <tr><td>05 Des 2024</td><td>Kamis</td><td>07.30 - 10.00</td><td>SKI</td><td>X MA</td><td>R-01</td><td>Ust. Burhanuddin</td><td><span class="badge badge-gold">Menunggu</span></td></tr>
+              <tr><td>06 Des 2024</td><td>Jumat</td><td>07.30 - 09.30</td><td>Matematika</td><td>XI MA</td><td>R-02</td><td>Ust. Sulaiman</td><td><span class="badge badge-gold">Menunggu</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== BANTUAN ===== -->
+    <div id="page-bantuan" class="page">
+      <div class="section-header">
+        <div class="section-title">Pusat Bantuan</div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;">
+        <div class="card" style="cursor:pointer;" onclick="showToast('Menghubungi Admin...')">
+          <div class="card-body" style="text-align:center;padding:24px;">
+            <div style="font-size:36px;margin-bottom:10px;">📞</div>
+            <div style="font-weight:700;font-size:15px;color:var(--hijau);">Hubungi Admin</div>
+            <div style="font-size:12px;color:var(--teks-muda);margin-top:4px;">Hubungi staf administrasi madrasah</div>
+          </div>
+        </div>
+        <div class="card" style="cursor:pointer;" onclick="showToast('Panduan dibuka...')">
+          <div class="card-body" style="text-align:center;padding:24px;">
+            <div style="font-size:36px;margin-bottom:10px;">📖</div>
+            <div style="font-weight:700;font-size:15px;color:var(--hijau);">Panduan Pengguna</div>
+            <div style="font-size:12px;color:var(--teks-muda);margin-top:4px;">Manual penggunaan portal ujian</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-title">❓ Pertanyaan yang Sering Diajukan (FAQ)</span></div>
+        <div class="card-body">
+          <div class="faq-item open">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              Bagaimana cara mengikuti ujian online? <span class="faq-arrow">▲</span>
+            </div>
+            <div class="faq-a">Masuk ke portal dengan username dan password yang diberikan oleh admin/wali kelas. Pilih menu "Soal Ujian", lalu klik tombol "Mulai Ujian" pada paket ujian yang tersedia. Pastikan koneksi internet stabil sebelum memulai ujian.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              Apa yang harus dilakukan jika lupa password? <span class="faq-arrow">▼</span>
+            </div>
+            <div class="faq-a">Hubungi admin madrasah atau wali kelas untuk reset password. Jangan berbagi password dengan siapapun. Password dapat diubah melalui menu Pengaturan Akun.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              Berapa batas waktu mengerjakan soal ujian? <span class="faq-arrow">▼</span>
+            </div>
+            <div class="faq-a">Waktu ujian ditentukan oleh guru pembuat soal, umumnya antara 60-120 menit. Timer akan ditampilkan di pojok kanan atas halaman ujian. Saat waktu habis, jawaban akan otomatis dikumpulkan.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              Bagaimana cara admin menambah data siswa? <span class="faq-arrow">▼</span>
+            </div>
+            <div class="faq-a">Admin dapat menambah data siswa melalui menu "Data Murid" → klik "Tambah Murid" → isi formulir dengan lengkap → simpan. Data dapat juga diimport secara massal menggunakan file Excel.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              Bagaimana cara membuat soal ujian baru? <span class="faq-arrow">▼</span>
+            </div>
+            <div class="faq-a">Guru dapat membuat soal melalui menu "Soal Ujian" → klik "Buat Paket Soal" → isi informasi paket ujian → tambahkan soal satu per satu beserta pilihan jawaban dan kunci jawaban → simpan dan aktifkan paket soal.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)">
+              Bagaimana melihat hasil dan nilai ujian? <span class="faq-arrow">▼</span>
+            </div>
+            <div class="faq-a">Hasil ujian dapat dilihat di menu "Hasil Ujian". Admin dan guru dapat melihat rekap nilai seluruh siswa. Siswa hanya dapat melihat nilai diri sendiri. Laporan dapat diunduh dalam format PDF atau Excel.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <div class="card-header"><span class="card-title">📬 Kirim Pertanyaan</span></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Nama</label>
+              <input class="form-control" placeholder="Nama lengkap Anda">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Kategori</label>
+              <select class="form-control">
+                <option>Akun & Login</option>
+                <option>Ujian Online</option>
+                <option>Nilai & Rapor</option>
+                <option>Lainnya</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pertanyaan</label>
+            <textarea class="form-control" placeholder="Tuliskan pertanyaan atau kendala yang Anda hadapi..."></textarea>
+          </div>
+          <button class="btn btn-primary" onclick="showToast('Pertanyaan berhasil dikirim! Admin akan segera merespons.')">📤 Kirim Pertanyaan</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ===== MODALS ===== -->
+
+<!-- Modal Tambah Murid -->
+<div class="modal-overlay" id="modal-tambah-murid">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">➕ Tambah Data Murid</div>
+      <button class="modal-close" onclick="closeModal('modal-tambah-murid')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">NIS</label>
+          <input class="form-control" id="new-nis" placeholder="Nomor Induk Siswa">
+        </div>
+        <div class="form-group">
+          <label class="form-label">NISN</label>
+          <input class="form-control" id="new-nisn" placeholder="Nomor Induk Siswa Nasional">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nama Lengkap</label>
+        <input class="form-control" id="new-nama-murid" placeholder="Nama lengkap siswa">
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Kelas</label>
+          <select class="form-control" id="new-kelas">
+            <option>X MA</option>
+            <option>XI MA</option>
+            <option>XII MA</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Jenis Kelamin</label>
+          <select class="form-control" id="new-jk">
+            <option>Laki-laki</option>
+            <option>Perempuan</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Alamat</label>
+        <input class="form-control" id="new-alamat-murid" placeholder="Alamat lengkap">
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Tanggal Lahir</label>
+          <input class="form-control" id="new-tgl-lahir" type="date">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nama Orang Tua</label>
+          <input class="form-control" id="new-ortu" placeholder="Nama ayah/ibu">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-tambah-murid')">Batal</button>
+      <button class="btn btn-primary" onclick="tambahMurid()">💾 Simpan Data</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Tambah Guru -->
+<div class="modal-overlay" id="modal-tambah-guru">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">➕ Tambah Data Guru</div>
+      <button class="modal-close" onclick="closeModal('modal-tambah-guru')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">NUPTK</label>
+          <input class="form-control" id="new-nuptk" placeholder="Nomor Unik PTK">
+        </div>
+        <div class="form-group">
+          <label class="form-label">NIP</label>
+          <input class="form-control" id="new-nip" placeholder="NIP (jika PNS)">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nama Lengkap</label>
+        <input class="form-control" id="new-nama-guru" placeholder="Nama lengkap beserta gelar">
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Mata Pelajaran</label>
+          <input class="form-control" id="new-mapel" placeholder="Mata pelajaran diampu">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Pendidikan Terakhir</label>
+          <select class="form-control" id="new-pendidikan">
+            <option>S-1</option>
+            <option>S-2</option>
+            <option>S-3</option>
+            <option>D-3</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-control" id="new-status-guru">
+            <option>GTY</option>
+            <option>GTT</option>
+            <option>PNS</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">No. HP</label>
+          <input class="form-control" id="new-hp-guru" placeholder="08xxxxxxxxxx">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-tambah-guru')">Batal</button>
+      <button class="btn btn-primary" onclick="tambahGuru()">💾 Simpan Data</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Tambah Soal -->
+<div class="modal-overlay" id="modal-tambah-soal">
+  <div class="modal" style="width:560px;">
+    <div class="modal-header">
+      <div class="modal-title">➕ Buat Paket Soal Ujian</div>
+      <button class="modal-close" onclick="closeModal('modal-tambah-soal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Nama Ujian</label>
+        <input class="form-control" id="new-ujian-nama" placeholder="Contoh: Ujian Akhir Semester Ganjil - Al-Qur'an Hadits">
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Mata Pelajaran</label>
+          <select class="form-control" id="new-ujian-mapel">
+            <option>Al-Qur'an Hadits</option>
+            <option>Akidah Akhlak</option>
+            <option>Fiqih</option>
+            <option>Bahasa Arab</option>
+            <option>SKI</option>
+            <option>Matematika</option>
+            <option>Bahasa Indonesia</option>
+            <option>Bahasa Inggris</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Kelas</label>
+          <select class="form-control" id="new-ujian-kelas">
+            <option>X MA</option>
+            <option>XI MA</option>
+            <option>XII MA</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Durasi (Menit)</label>
+          <input class="form-control" type="number" id="new-ujian-durasi" value="90">
+        </div>
+        <div class="form-group">
+          <label class="form-label">KKM</label>
+          <input class="form-control" type="number" id="new-ujian-kkm" value="70">
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Tanggal Ujian</label>
+          <input class="form-control" type="date" id="new-ujian-tanggal">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Jam Mulai</label>
+          <input class="form-control" type="time" id="new-ujian-jam" value="07:30">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Petunjuk Pengerjaan</label>
+        <textarea class="form-control" id="new-ujian-petunjuk" placeholder="Tuliskan petunjuk pengerjaan untuk siswa..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-tambah-soal')">Batal</button>
+      <button class="btn btn-primary" onclick="tambahPaketSoal()">💾 Buat Paket Soal</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Tambah Jadwal -->
+<div class="modal-overlay" id="modal-tambah-jadwal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">➕ Tambah Jadwal Ujian</div>
+      <button class="modal-close" onclick="closeModal('modal-tambah-jadwal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Tanggal</label>
+          <input class="form-control" type="date">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mata Pelajaran</label>
+          <select class="form-control">
+            <option>Al-Qur'an Hadits</option>
+            <option>Fiqih</option>
+            <option>Bahasa Arab</option>
+            <option>SKI</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Kelas</label>
+          <select class="form-control">
+            <option>X MA</option>
+            <option>XI MA</option>
+            <option>XII MA</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ruang</label>
+          <input class="form-control" placeholder="Contoh: R-01">
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Jam Mulai</label>
+          <input class="form-control" type="time" value="07:30">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Jam Selesai</label>
+          <input class="form-control" type="time" value="09:30">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Pengawas</label>
+        <input class="form-control" placeholder="Nama pengawas ujian">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-tambah-jadwal')">Batal</button>
+      <button class="btn btn-primary" onclick="showToast('Jadwal berhasil ditambahkan!');closeModal('modal-tambah-jadwal')">💾 Simpan Jadwal</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-container"></div>
+
+<script>
+// ==================== DATA ====================
+const dataMurid = [
+  { nis:'2024001', nama:'Muhammad Rizqi Ramadhan', kelas:'X MA', jk:'Laki-laki', alamat:'Lancirang', status:'Aktif' },
+  { nis:'2024002', nama:'Aisyah Nur Fadilah', kelas:'X MA', jk:'Perempuan', alamat:'Pitu Riawa', status:'Aktif' },
+  { nis:'2024003', nama:'Ahmad Syahrul Ramli', kelas:'X MA', jk:'Laki-laki', alamat:'Rappang', status:'Aktif' },
+  { nis:'2023001', nama:'Fatimah Az-Zahrah', kelas:'XI MA', jk:'Perempuan', alamat:'Lancirang', status:'Aktif' },
+  { nis:'2023002', nama:'Abdul Karim Saleh', kelas:'XI MA', jk:'Laki-laki', alamat:'Sidrap', status:'Aktif' },
+  { nis:'2023003', nama:'Nurul Hidayah Putri', kelas:'XI MA', jk:'Perempuan', alamat:'Alitta', status:'Aktif' },
+  { nis:'2022001', nama:'Siti Rahma Wati', kelas:'XII MA', jk:'Perempuan', alamat:'Lancirang', status:'Aktif' },
+  { nis:'2022002', nama:'Muh. Fauzan Adhim', kelas:'XII MA', jk:'Laki-laki', alamat:'Pitu Riase', status:'Aktif' },
+  { nis:'2022003', nama:'Hafsah Nur Azizah', kelas:'XII MA', jk:'Perempuan', alamat:'Parepare', status:'Tidak Aktif' },
+];
+
+const dataGuru = [
+  { nuptk:'1234567890123456', nama:'Drs. H. Muhammad Saleh', mapel:'Kepala Madrasah', pendidikan:'S-2', status:'PNS', hp:'081234567890' },
+  { nuptk:'2345678901234567', nama:'H. Ahmad Fauzi, S.Ag', mapel:'Al-Qur\'an Hadits', pendidikan:'S-1', status:'GTY', hp:'082345678901' },
+  { nuptk:'3456789012345678', nama:'Hj. Nuraeni, S.Pd.I', mapel:'Akidah Akhlak', pendidikan:'S-1', status:'GTY', hp:'083456789012' },
+  { nuptk:'4567890123456789', nama:'Ust. Kaharuddin, Lc', mapel:'Bahasa Arab', pendidikan:'S-1', status:'GTY', hp:'084567890123' },
+  { nuptk:'5678901234567890', nama:'Ustz. Siti Aminah, S.Pd.I', mapel:'Fiqih', pendidikan:'S-1', status:'GTT', hp:'085678901234' },
+  { nuptk:'6789012345678901', nama:'Ust. Burhanuddin, S.Ag', mapel:'SKI', pendidikan:'S-1', status:'GTY', hp:'086789012345' },
+  { nuptk:'7890123456789012', nama:'Ust. Sulaiman, S.Pd', mapel:'Matematika', pendidikan:'S-1', status:'GTT', hp:'087890123456' },
+  { nuptk:'8901234567890123', nama:'Ustz. Rahmawati, S.Pd', mapel:'Bahasa Indonesia', pendidikan:'S-1', status:'GTT', hp:'088901234567' },
+];
+
+const paketSoal = [
+  { id:1, nama:'UAS Ganjil - Al-Qur\'an Hadits', mapel:'Al-Qur\'an Hadits', kelas:'X MA', durasi:90, soal:20, status:'Aktif', tanggal:'02/12/2024' },
+  { id:2, nama:'UAS Ganjil - Fiqih', mapel:'Fiqih', kelas:'XI MA', durasi:90, soal:20, status:'Aktif', tanggal:'03/12/2024' },
+  { id:3, nama:'UAS Ganjil - Bahasa Arab', mapel:'Bahasa Arab', kelas:'XII MA', durasi:120, soal:30, status:'Draft', tanggal:'04/12/2024' },
+  { id:4, nama:'UAS Ganjil - SKI', mapel:'SKI', kelas:'X MA', durasi:60, soal:25, status:'Draft', tanggal:'05/12/2024' },
+];
+
+const soalBank = [
+  { soal: 'Surah Al-Fatihah terdiri dari berapa ayat?', opsi: ['5 ayat', '6 ayat', '7 ayat', '8 ayat'], jawaban: 2 },
+  { soal: 'Apa arti dari kata "Alhamdulillah"?', opsi: ['Maha Suci Allah', 'Segala Puji Bagi Allah', 'Allah Maha Besar', 'Tiada Tuhan selain Allah'], jawaban: 1 },
+  { soal: 'Hadits yang diriwayatkan oleh satu orang perawi disebut...', opsi: ['Hadits Mutawatir', 'Hadits Shahih', 'Hadits Ahad', 'Hadits Dhaif'], jawaban: 2 },
+  { soal: 'Berapa jumlah surat dalam Al-Qur\'an?', opsi: ['112 Surat', '113 Surat', '114 Surat', '115 Surat'], jawaban: 2 },
+  { soal: 'Surat Al-Baqarah termasuk surat...', opsi: ['Makkiyah', 'Madaniyah', 'Campuran', 'Bukan keduanya'], jawaban: 1 },
+];
+
+// ==================== STATE ====================
+let currentRole = 'admin';
+let currentPage = 'dasbor';
+let currentSoalIndex = 0;
+let jawabanSiswa = {};
+let timerInterval = null;
+let timerSisa = 5400;
+let ujianAktif = null;
+
+// ==================== LOGIN ====================
+function setRole(role, btn) {
+  currentRole = role;
+  document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function doLogin() {
+  const user = document.getElementById('login-user').value.trim();
+  const pass = document.getElementById('login-pass').value.trim();
+  if (!user || !pass) { showToastGlobal('Isi username dan password!'); return; }
+
+  document.getElementById('login-page').classList.remove('show');
+
+  const roleNames = { admin: 'Administrator', guru: 'Guru', murid: 'Siswa' };
+  const roleIcons = { admin: 'AD', guru: 'GR', murid: 'SW' };
+  document.getElementById('sb-avatar').textContent = roleIcons[currentRole];
+  document.getElementById('sb-name').textContent = user;
+  document.getElementById('sb-role').textContent = roleNames[currentRole];
+  document.getElementById('tb-role-badge').textContent = 
+    currentRole === 'admin' ? '👨‍💼 Admin' : currentRole === 'guru' ? '👨‍🏫 Guru' : '🎓 Siswa';
+
+  renderMurid(dataMurid);
+  renderGuru(dataGuru);
+  renderPaketSoal();
+  updateDate();
+  showToast('Selamat datang, ' + user + '! Ahlan wa Sahlan 🌙');
+}
+
+function doLogout() {
+  location.reload();
+}
+
+// ==================== NAVIGATION ====================
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  currentPage = page;
+
+  if (page === 'soal-ujian') {
+    document.getElementById('daftar-soal').style.display = 'block';
+    document.getElementById('ujian-active').style.display = 'none';
+  }
+}
+
+// ==================== DATE ====================
+function updateDate() {
+  const now = new Date();
+  const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+  const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+  document.getElementById('tb-date').textContent =
+    days[now.getDay()] + ', ' + now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
+  document.getElementById('dash-greeting').textContent =
+    (now.getHours() < 11 ? '🌅 Selamat Pagi' : now.getHours() < 15 ? '☀️ Selamat Siang' : '🌆 Selamat Sore');
+}
+
+// ==================== RENDER MURID ====================
+function renderMurid(data) {
+  const tbody = document.getElementById('tbody-murid');
+  tbody.innerHTML = '';
+  data.forEach((m, i) => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${i+1}</td>
+        <td>${m.nis}</td>
+        <td><strong>${m.nama}</strong></td>
+        <td><span class="badge badge-blue">${m.kelas}</span></td>
+        <td>${m.jk}</td>
+        <td>${m.alamat}</td>
+        <td><span class="badge ${m.status === 'Aktif' ? 'badge-green' : 'badge-red'}">${m.status}</span></td>
+        <td>
+          <button class="btn btn-outline btn-sm" onclick="showToast('Data ${m.nama} dibuka')">✏️</button>
+          <button class="btn btn-danger btn-sm" onclick="hapusMurid('${m.nis}')">🗑</button>
+        </td>
+      </tr>`;
+  });
+  document.getElementById('murid-count').textContent = data.length + ' Siswa';
+}
+
+function filterMurid() {
+  const cari = document.getElementById('cari-murid').value.toLowerCase();
+  const kelas = document.getElementById('filter-kelas-murid').value;
+  const status = document.getElementById('filter-status-murid').value;
+  const filtered = dataMurid.filter(m =>
+    (m.nama.toLowerCase().includes(cari) || m.nis.includes(cari) || m.kelas.toLowerCase().includes(cari)) &&
+    (kelas === '' || m.kelas.startsWith(kelas)) &&
+    (status === '' || m.status === status)
+  );
+  renderMurid(filtered);
+}
+
+function tambahMurid() {
+  const nama = document.getElementById('new-nama-murid').value.trim();
+  const nis = document.getElementById('new-nis').value.trim();
+  if (!nama || !nis) { showToast('Nama dan NIS wajib diisi!'); return; }
+  dataMurid.push({
+    nis, nama,
+    kelas: document.getElementById('new-kelas').value,
+    jk: document.getElementById('new-jk').value,
+    alamat: document.getElementById('new-alamat-murid').value || 'Lancirang',
+    status: 'Aktif'
+  });
+  renderMurid(dataMurid);
+  closeModal('modal-tambah-murid');
+  showToast('Data murid ' + nama + ' berhasil ditambahkan! ✅');
+}
+
+function hapusMurid(nis) {
+  const idx = dataMurid.findIndex(m => m.nis === nis);
+  if (idx !== -1) {
+    const nama = dataMurid[idx].nama;
+    dataMurid.splice(idx, 1);
+    renderMurid(dataMurid);
+    showToast('Data ' + nama + ' berhasil dihapus');
+  }
+}
+
+// ==================== RENDER GURU ====================
+function renderGuru(data) {
+  const tbody = document.getElementById('tbody-guru');
+  tbody.innerHTML = '';
+  data.forEach((g, i) => {
+    const statusClass = g.status === 'PNS' ? 'badge-green' : g.status === 'GTY' ? 'badge-gold' : 'badge-blue';
+    tbody.innerHTML += `
+      <tr>
+        <td>${i+1}</td>
+        <td style="font-size:11px;">${g.nuptk}</td>
+        <td><strong>${g.nama}</strong></td>
+        <td>${g.mapel}</td>
+        <td>${g.pendidikan}</td>
+        <td><span class="badge ${statusClass}">${g.status}</span></td>
+        <td>${g.hp}</td>
+        <td>
+          <button class="btn btn-outline btn-sm" onclick="showToast('Data ${g.nama.split(',')[0]} dibuka')">✏️</button>
+          <button class="btn btn-danger btn-sm" onclick="hapusGuru('${g.nuptk}')">🗑</button>
+        </td>
+      </tr>`;
+  });
+  document.getElementById('guru-count').textContent = data.length + ' Guru';
+}
+
+function filterGuru() {
+  const cari = document.getElementById('cari-guru').value.toLowerCase();
+  const status = document.getElementById('filter-status-guru').value;
+  const filtered = dataGuru.filter(g =>
+    (g.nama.toLowerCase().includes(cari) || g.mapel.toLowerCase().includes(cari)) &&
+    (status === '' || g.status === status)
+  );
+  renderGuru(filtered);
+}
+
+function tambahGuru() {
+  const nama = document.getElementById('new-nama-guru').value.trim();
+  const nuptk = document.getElementById('new-nuptk').value.trim();
+  if (!nama) { showToast('Nama guru wajib diisi!'); return; }
+  dataGuru.push({
+    nuptk: nuptk || '—',
+    nama,
+    mapel: document.getElementById('new-mapel').value || '—',
+    pendidikan: document.getElementById('new-pendidikan').value,
+    status: document.getElementById('new-status-guru').value,
+    hp: document.getElementById('new-hp-guru').value || '—'
+  });
+  renderGuru(dataGuru);
+  closeModal('modal-tambah-guru');
+  showToast('Data guru ' + nama + ' berhasil ditambahkan! ✅');
+}
+
+function hapusGuru(nuptk) {
+  const idx = dataGuru.findIndex(g => g.nuptk === nuptk);
+  if (idx !== -1) {
+    const nama = dataGuru[idx].nama;
+    dataGuru.splice(idx, 1);
+    renderGuru(dataGuru);
+    showToast('Data ' + nama + ' berhasil dihapus');
+  }
+}
+
+// ==================== PAKET SOAL ====================
+function renderPaketSoal() {
+  const grid = document.getElementById('paket-soal-grid');
+  grid.innerHTML = '';
+  paketSoal.forEach(p => {
+    const isAktif = p.status === 'Aktif';
+    grid.innerHTML += `
+      <div class="ujian-card">
+        <div class="ujian-card-header" style="${isAktif ? '' : 'background:linear-gradient(135deg,#666,#888);'}">
+          <div class="ujian-card-mapel">${p.nama}</div>
+          <div class="ujian-card-meta">${p.kelas} &bull; ${p.tanggal}</div>
+        </div>
+        <div class="ujian-card-body">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--teks-muda);margin-bottom:10px;">
+            <span>📚 ${p.mapel}</span>
+            <span>⏱ ${p.durasi} menit</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--teks-muda);margin-bottom:14px;">
+            <span>📝 ${p.soal} soal</span>
+            <span class="badge ${isAktif ? 'badge-green' : 'badge-gray'}">${p.status}</span>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-primary btn-sm" style="flex:1;justify-content:center;" onclick="mulaiUjian(${p.id})">▶ Mulai Ujian</button>
+            <button class="btn btn-outline btn-sm" onclick="showToast('Mengedit paket soal...')">✏️</button>
+          </div>
+        </div>
+      </div>`;
+  });
+}
+
+function tambahPaketSoal() {
+  const nama = document.getElementById('new-ujian-nama').value.trim();
+  if (!nama) { showToast('Nama ujian wajib diisi!'); return; }
+  paketSoal.push({
+    id: paketSoal.length + 1,
+    nama,
+    mapel: document.getElementById('new-ujian-mapel').value,
+    kelas: document.getElementById('new-ujian-kelas').value,
+    durasi: document.getElementById('new-ujian-durasi').value,
+    soal: 0,
+    status: 'Draft',
+    tanggal: document.getElementById('new-ujian-tanggal').value || '—'
+  });
+  renderPaketSoal();
+  closeModal('modal-tambah-soal');
+  showToast('Paket soal "' + nama + '" berhasil dibuat! ✅');
+}
+
+// ==================== UJIAN / TIMER ====================
+function mulaiUjian(id) {
+  const paket = paketSoal.find(p => p.id === id);
+  if (!paket) return;
+  ujianAktif = paket;
+  currentSoalIndex = 0;
+  jawabanSiswa = {};
+
+  document.getElementById('daftar-soal').style.display = 'none';
+  document.getElementById('ujian-active').style.display = 'block';
+  document.getElementById('ujian-nama-aktif').textContent = paket.nama;
+  document.getElementById('ujian-meta-aktif').textContent = paket.kelas + ' — ' + paket.mapel;
+
+  timerSisa = paket.durasi * 60;
+  renderSoalNav();
+  renderSoal();
+  startTimer();
+  showToast('Ujian dimulai! Semoga sukses 🌙');
+}
+
+function startTimer() {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timerSisa--;
+    const m = Math.floor(timerSisa / 60);
+    const s = timerSisa % 60;
+    const el = document.getElementById('ujian-timer');
+    if (el) el.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    if (timerSisa <= 0) { clearInterval(timerInterval); selesaiUjian(); }
+    if (timerSisa === 300) el.style.color = '#ff6b6b';
+  }, 1000);
+}
+
+function renderSoalNav() {
+  const nav = document.getElementById('soal-nav-container');
+  const total = Math.min(soalBank.length, 5);
+  nav.innerHTML = '';
+  for (let i = 0; i < total; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'soal-nav-btn' + (i === currentSoalIndex ? ' current' : '') + (jawabanSiswa[i] !== undefined ? ' answered' : '');
+    btn.textContent = i + 1;
+    btn.onclick = () => { currentSoalIndex = i; renderSoal(); renderSoalNav(); };
+    nav.appendChild(btn);
+  }
+}
+
+function renderSoal() {
+  const total = Math.min(soalBank.length, 5);
+  const s = soalBank[currentSoalIndex];
+  document.getElementById('soal-nomor').textContent = 'Soal ' + (currentSoalIndex + 1) + ' dari ' + total;
+  document.getElementById('soal-teks').textContent = s.soal;
+
+  const opsiEl = document.getElementById('soal-opsi');
+  opsiEl.innerHTML = '';
+  const huruf = ['A', 'B', 'C', 'D'];
+  s.opsi.forEach((o, i) => {
+    const div = document.createElement('div');
+    div.className = 'opsi' + (jawabanSiswa[currentSoalIndex] === i ? ' selected' : '');
+    div.innerHTML = `<div class="opsi-huruf">${huruf[i]}</div><div>${o}</div>`;
+    div.onclick = () => pilihJawaban(i);
+    opsiEl.appendChild(div);
+  });
+
+  document.getElementById('btn-prev-soal').disabled = currentSoalIndex === 0;
+  const isLast = currentSoalIndex === total - 1;
+  document.getElementById('btn-next-soal').textContent = isLast ? '✅ Selesai' : 'Selanjutnya →';
+}
+
+function pilihJawaban(i) {
+  jawabanSiswa[currentSoalIndex] = i;
+  renderSoalNav();
+  renderSoal();
+}
+
+function nextSoal() {
+  const total = Math.min(soalBank.length, 5);
+  if (currentSoalIndex < total - 1) {
+    currentSoalIndex++;
+    renderSoal();
+    renderSoalNav();
+  } else {
+    konfirmasiKumpul();
+  }
+}
+
+function prevSoal() {
+  if (currentSoalIndex > 0) {
+    currentSoalIndex--;
+    renderSoal();
+    renderSoalNav();
+  }
+}
+
+function konfirmasiKumpul() {
+  const terjawab = Object.keys(jawabanSiswa).length;
+  const total = Math.min(soalBank.length, 5);
+  if (confirm('Anda telah menjawab ' + terjawab + ' dari ' + total + ' soal.\n\nYakin ingin mengumpulkan jawaban?')) {
+    selesaiUjian();
+  }
+}
+
+function selesaiUjian() {
+  clearInterval(timerInterval);
+  let benar = 0;
+  soalBank.slice(0, 5).forEach((s, i) => { if (jawabanSiswa[i] === s.jawaban) benar++; });
+  const nilai = Math.round((benar / 5) * 100);
+  const lulus = nilai >= 70;
+
+  document.getElementById('ujian-active').innerHTML = `
+    <div class="soal-container">
+      <div class="soal-header">
+        <div><div style="font-family:'Cinzel',serif;font-size:16px;font-weight:700;">Hasil Ujian</div></div>
+        <span class="badge ${lulus ? 'badge-green' : 'badge-red'}" style="font-size:14px;padding:8px 16px;">${lulus ? '✅ LULUS' : '❌ REMEDIAL'}</span>
+      </div>
+      <div class="soal-body" style="text-align:center;padding:40px 28px;">
+        <div style="font-family:'Scheherazade New',serif;font-size:32px;color:var(--emas);direction:rtl;margin-bottom:20px;">الحمد لله</div>
+        <div class="nilai-circle ${lulus ? 'lulus' : 'tidak-lulus'}">
+          <div class="nilai-angka" style="color:${lulus ? 'var(--hijau)' : '#c0392b'}">${nilai}</div>
+          <div class="nilai-label" style="color:${lulus ? 'var(--hijau)' : '#c0392b'}">NILAI</div>
+        </div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px;">${benar} dari 5 soal benar</div>
+        <div style="font-size:13px;color:var(--teks-muda);margin-bottom:28px;">${lulus ? 'Selamat! Anda dinyatakan lulus ujian ini.' : 'Nilai Anda belum memenuhi KKM (70). Silakan ikuti remedial.'}</div>
+        <button class="btn btn-primary" onclick="kembaliDaftarSoal()">← Kembali ke Daftar Ujian</button>
+      </div>
+    </div>`;
+}
+
+function kembaliDaftarSoal() {
+  document.getElementById('ujian-active').style.display = 'none';
+  document.getElementById('daftar-soal').style.display = 'block';
+  renderPaketSoal();
+}
+
+// ==================== MODAL ====================
+function openModal(id) { document.getElementById(id).classList.add('show'); }
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+document.addEventListener('click', e => {
+  if (e.target.classList.contains('modal-overlay')) {
+    e.target.classList.remove('show');
+  }
+});
+
+// ==================== FAQ ====================
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+  el.querySelector('.faq-arrow').textContent = item.classList.contains('open') ? '▲' : '▼';
+}
+
+// ==================== TOAST ====================
+function showToast(msg) {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = '✓ ' + msg;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 3500);
+}
+
+function showToastGlobal(msg) {
+  alert(msg);
+}
+
+// ==================== INIT ====================
+updateDate();
+setInterval(updateDate, 60000);
+</script>
+</body>
+</html>
